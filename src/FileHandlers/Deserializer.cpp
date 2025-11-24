@@ -42,7 +42,11 @@ void Deserializer::TextDeserialization(std::unordered_map<int, std::string>& fil
 	testFile << fileBuffer;
 	testFile.close();
 }
-
+/// <summary>
+/// Deserializa os dados
+/// </summary>
+/// <param name="invIndex"></param>
+/// <returns></returns>
 int Deserializer::Deserialize(InvertedIndex& invIndex)
 {
 	std::ifstream saveFile("index.bat", std::ios::binary);

@@ -7,7 +7,11 @@ InvertedIndex::InvertedIndex()
 InvertedIndex::~InvertedIndex()
 {
 }
-
+/// <summary>
+/// Adciona uma palavra para o index
+/// </summary>
+/// <param name="word"></param>
+/// <param name="fileName"></param>
 void InvertedIndex::AddWord(std::string word, std::string fileName)
 {
 	_wordMap[word].insert(fileName);

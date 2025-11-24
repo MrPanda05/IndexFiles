@@ -15,7 +15,13 @@ enum State {
 	none,
 	debug
 };
-
+/// <summary>
+/// Inicializa o estado do programa
+/// </summary>
+/// <param name="argc"></param>
+/// <param name="argv"></param>
+/// <param name="state"></param>
+/// <returns></returns>
 bool Initialize(int argc, char* argv[], State& state) {
 	if (argc < 2) {
 		std::cout << "Por favor, incluir qual modo execucao" << std::endl;

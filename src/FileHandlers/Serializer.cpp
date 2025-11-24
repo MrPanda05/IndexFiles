@@ -48,7 +48,11 @@ void Serializer::TextSerialization(std::unordered_map<int, std::string>& fileNam
 	testFile << fileBuffer;
 	testFile.close();
 }
-
+/// <summary>
+/// Serializa os dados
+/// </summary>
+/// <param name="wordMap"></param>
+/// <param name="fileNamesInt"></param>
 void Serializer::Serialize(std::unordered_map<std::string, std::unordered_set<std::string>>& wordMap, std::unordered_map<int, std::string>& fileNamesInt)
 {
 	ConvertMap(wordMap, fileNamesInt);
