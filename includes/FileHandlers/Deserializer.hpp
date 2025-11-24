@@ -18,7 +18,7 @@ class Deserializer {
 		template <typename T> T LoadData(std::ifstream& file);
 		void TextDeserialization(std::unordered_map<int, std::string>& fileNamesInt);
 	public:
-		void Deserialize(InvertedIndex& invIndex);
+		int Deserialize(InvertedIndex& invIndex);
 		void TestDeserialize();
 };
 

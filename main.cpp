@@ -93,7 +93,7 @@ int main(int argc, char* argv[]) {
 		}
 		InvertedIndex* invIndex = new InvertedIndex();
 		Deserializer* deserializer = new Deserializer();
-		deserializer->Deserialize(*invIndex);
+		if (deserializer->Deserialize(*invIndex) != 1) return 1;
 		std::vector<std::string> args(argv + 3, argv + argc);
 		WordSearcher* wordSeacher = new WordSearcher(invIndex->GetMap(), args);
 		if (wordSeacher->Find() == 1) {
@@ -113,7 +113,6 @@ int main(int argc, char* argv[]) {
 		return 1;
 	}
 	if (currentState == State::debug) {
-		std::cout << "complacências" << std::endl;
 		FileProcessor* filePross = new FileProcessor(*fileMan);
 		InvertedIndex* invIndex = new InvertedIndex();
 		Serializer* serializer = new Serializer();

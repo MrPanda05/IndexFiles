@@ -19,6 +19,7 @@ class FileProcessor {
 		bool WordIsStopWord(std::string word);
 		bool HasSaveFile();
 		void SetWordSet();
+		char MapUtf8ToAscii(unsigned char byte1, unsigned char byte2);
 	public:
 		FileProcessor(FileManager& fileManager);
 		~FileProcessor();

@@ -55,6 +55,20 @@ void FileProcessor::SetWordSet()
 	}
 }
 
+char FileProcessor::MapUtf8ToAscii(unsigned char byte1, unsigned char byte2)
+{
+	if (byte1 == 0xC3) {
+		if ((byte2 >= 0xA0 && byte2 <= 0xA5) || (byte2 >= 0x80 && byte2 <= 0x85)) return 'a';
+		if ((byte2 >= 0xA8 && byte2 <= 0xAB) || (byte2 >= 0x88 && byte2 <= 0x8B)) return 'e';
+		if ((byte2 >= 0xAC && byte2 <= 0xAF) || (byte2 >= 0x8C && byte2 <= 0x8F)) return 'i';
+		if ((byte2 >= 0xB2 && byte2 <= 0xB6) || (byte2 >= 0x92 && byte2 <= 0x96)) return 'o';
+		if ((byte2 >= 0xB9 && byte2 <= 0xBC) || (byte2 >= 0x99 && byte2 <= 0x9C)) return 'u';
+		if (byte2 == 0xA7 || byte2 == 0x87) return 'c';
+		if (byte2 == 0xB1 || byte2 == 0x91) return 'n';
+	}
+	return 0; // Not a character we recognize/want to convert
+}
+
 FileProcessor::FileProcessor(FileManager& fileManager) : _fileManager(fileManager)
 {
 	if (SearchForStopWordText() == 1) {
@@ -90,6 +104,34 @@ int FileProcessor::ProcessFile(fs::path path)
 		newFileBuffer.reserve(fileBuffer.size());
 		std::string temp;
 		for (int i = 0; i < fileBuffer.size(); i++) {
+			//Detecta characteres que sao maiores que um byte
+			unsigned char uChar = static_cast<unsigned char>(fileBuffer[i]);
+			if (uChar >= 0xC0) {
+				if (uChar == 0xE2 && i + 2 < fileBuffer.size()) {
+					unsigned char b2 = static_cast<unsigned char>(fileBuffer[i + 1]);
+					unsigned char b3 = static_cast<unsigned char>(fileBuffer[i + 2]);
+
+					if (b2 == 0x80) {
+						if (b3 == 0x9C || b3 == 0x9D || b3 == 0x98 || b3 == 0x99 ||
+							b3 == 0x93 || b3 == 0x94) {
+
+							// É pontuação especial! Pula os 2 bytes extras
+							i += 2;
+							continue;
+						}
+					}
+				}
+				if (i + 1 < fileBuffer.size()) {
+					unsigned char nextChar = static_cast<unsigned char>(fileBuffer[i + 1]);
+					char asciiEquivalent = MapUtf8ToAscii(uChar, nextChar);
+					if (asciiEquivalent != 0) {
+						temp.push_back(asciiEquivalent);
+						i++; // Skip 1 byte
+						continue;
+					}
+				}
+			}
+			//Detecta characteres normais
 			char currentChar = fileBuffer[i];
 			if (currentChar == ' ' || currentChar == '\n') {
 				if (!temp.empty()) {
@@ -105,10 +147,14 @@ int FileProcessor::ProcessFile(fs::path path)
 				}
 				continue;
 			}
+			if (currentChar >= 0xC0) {
+				std::cout << "Essa letra em acento" << std::endl;
+			}
 			if (std::isupper(static_cast<unsigned char>(currentChar))) {
 				currentChar = std::tolower(static_cast<unsigned char>(currentChar));
 			}
 			if (std::ispunct(static_cast<unsigned char>(currentChar))) continue;
+
 			
 			temp.push_back(currentChar);
 		}

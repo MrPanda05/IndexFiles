@@ -43,15 +43,20 @@ void Deserializer::TextDeserialization(std::unordered_map<int, std::string>& fil
 	testFile.close();
 }
 
-void Deserializer::Deserialize(InvertedIndex& invIndex)
+int Deserializer::Deserialize(InvertedIndex& invIndex)
 {
 	std::ifstream saveFile("index.bat", std::ios::binary);
+	if (!saveFile.is_open()) {
+		std::cout << "Erro ao abrir o arquivo" << std::endl;
+		return -1;
+	}
 	invIndex.SetFileNames(LoadData<std::unordered_map<int, std::string>>(saveFile));
 	std::unordered_map<std::string, std::unordered_set<int>> serilizedDataMap = LoadData<std::unordered_map<std::string, std::unordered_set<int>>>(saveFile);
 	saveFile.close();
 	DeconvertMap(serilizedDataMap, invIndex.GetFileNames());
 	invIndex.SetWordMap(_deconvertedMap);
 	//TextDeserialization(invIndex.GetFileNames());
+	return 1;
 }
 
 void Deserializer::TestDeserialize()
