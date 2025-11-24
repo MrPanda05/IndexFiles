@@ -6,7 +6,13 @@
 #include <vector>
 class InvertedIndex {
 	private:
+		/// <summary>
+		/// O verdadeiro indice invertido onde a chave eh a palavra, e o conteudo eh um set, com os nomes dos arquivos, set para evitar repeticao
+		/// </summary>
 		std::unordered_map<std::string, std::unordered_set<std::string>> _wordMap;
+		/// <summary>
+		/// Mapea cada numero, para arquivo, esse eh usado na serelizacao e deserelizacao
+		/// </summary>
 		std::unordered_map<int, std::string> _docNamesToInt;
 		int _fileCount = 0;
 	public:

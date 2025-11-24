@@ -1,6 +1,10 @@
 #include "Serializer.hpp"
 #include "Deserializer.hpp"
-
+/// <summary>
+/// converte um std::unordered_map<std::string, std::unordered_set<std::string>> para um std::unordered_map<std::string, std::unordered_set<int>>
+/// </summary>
+/// <param name="wordMap"></param>
+/// <param name="fileNamesInt"></param>
 void Serializer::ConvertMap(std::unordered_map<std::string, std::unordered_set<std::string>>& wordMap, std::unordered_map<int, std::string>& fileNamesInt)
 {
 	//Para cada palavra ["Word"]
@@ -22,7 +26,10 @@ void Serializer::ConvertMap(std::unordered_map<std::string, std::unordered_set<s
 		}
 	}
 }
-
+/// <summary>
+/// save file versao de texto, usado para visulização
+/// </summary>
+/// <param name="fileNamesInt"></param>
 void Serializer::TextSerialization(std::unordered_map<int, std::string>& fileNamesInt)
 {
 	std::string fileBuffer;
@@ -49,7 +56,13 @@ void Serializer::TextSerialization(std::unordered_map<int, std::string>& fileNam
 	testFile.close();
 }
 /// <summary>
-/// Serializa os dados
+/// wordMap eh o verdadeiro indice invertido, nao se pode serelizar ele direto, pois salvaria muitos dados repitodos(nomes dos arquivos), entao, como temos o fileNamesInt, que mapeia 
+/// um numero para o arquivo, faremos o seguinte, para cada chave(palavra), subistituia o nome de arquivo, pelo seu numero
+/// ou seja, dado a seguinte palavra ["arroz"] = {"arquivo1.txt, "arquivo2.txt}
+/// e dado um fileNamesInt 0 = "arquivo1.txt", 1 = "arquivo2.txt"
+/// Convertemos para ["arroz"] = {0, 1}
+/// esse nomo dado eh que sera serelizado
+/// fileNamesInt tambem eh serelizado para fazer o processo inverto
 /// </summary>
 /// <param name="wordMap"></param>
 /// <param name="fileNamesInt"></param>
@@ -67,13 +80,13 @@ void Serializer::Serialize(std::unordered_map<std::string, std::unordered_set<st
 void Serializer::TestSerialize()
 {
 
-	std::ofstream saveFile("index.bat", std::ios::binary);
+	std::ofstream saveFile("indexTest.bat", std::ios::binary);
 	//int TestData = 10;
-	//std::string TestData = "Bucetossauro";
-	//std::unordered_set<std::string> TestData = { "gay", "bosta", "lasanha" };
+	//std::string TestData = "bolo do roblox";
+	//std::unordered_set<std::string> TestData = { "alho", "nariz", "lasanha" };
 	std::unordered_map<int, std::string> TestData1 =
 	{
-		{0, "bosta"},
+		{0, "livro"},
 		{1, "limao"},
 		{2, "arroz"}
 	};
@@ -101,4 +114,3 @@ void Serializer::TestSerialize()
 	SaveData(saveFile, TestData2);
 	saveFile.close();
 }
-//std::unordered_map<std::string, std::unordered_set<int>>

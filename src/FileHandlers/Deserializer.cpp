@@ -43,7 +43,7 @@ void Deserializer::TextDeserialization(std::unordered_map<int, std::string>& fil
 	testFile.close();
 }
 /// <summary>
-/// Deserializa os dados
+/// Deserializa os dados, processo inverso do Serializer
 /// </summary>
 /// <param name="invIndex"></param>
 /// <returns></returns>
@@ -66,7 +66,7 @@ int Deserializer::Deserialize(InvertedIndex& invIndex)
 void Deserializer::TestDeserialize()
 {
 	
-	std::ifstream savefile("index.bat", std::ios::binary);
+	std::ifstream savefile("indexTest.bat", std::ios::binary);
 	//int TestData = LoadData<int>(savefile);
 	//std::string TestData = LoadData<std::string>(savefile);
 	//std::unordered_set<std::string> TestData = LoadData<std::unordered_set<std::string>>(savefile);
