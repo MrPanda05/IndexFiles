@@ -25,11 +25,18 @@ bool FileManager::FileUseExtension(fs::path filePath, std::string fileExtension)
 {
     return filePath.extension() == fileExtension;
 }
-
 fs::path FileManager::FindFile(fs::path dirPath, std::string fileName)
 {
     for (auto const& dir_entry : fs::recursive_directory_iterator{ dirPath }) {
         if (dir_entry.path().stem() == fileName) return dir_entry;
+    }
+    return "";
+}
+
+fs::path FileManager::FindFileFullName(fs::path dirPath, std::string fileName)
+{
+    for (auto const& dir_entry : fs::recursive_directory_iterator{ dirPath }) {
+        if (dir_entry.path().filename().string() == fileName) return dir_entry;
     }
     return "";
 }

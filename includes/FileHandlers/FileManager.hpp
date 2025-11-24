@@ -11,5 +11,6 @@ class FileManager {
 		int HowMannyFiles(fs::path dirPath);
 		bool FileUseExtension(fs::path filePath, std::string fileExtension);
 		fs::path FindFile(fs::path dirPath, std::string fileName);
+		fs::path FindFileFullName(fs::path dirPath, std::string fileName);
 		fs::recursive_directory_iterator GetIterator(fs::path dirPath);
 };

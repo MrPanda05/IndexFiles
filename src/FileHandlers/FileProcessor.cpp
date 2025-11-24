@@ -6,22 +6,31 @@ int FileProcessor::SearchForStopWordText()
 {
 	_stopWordsFilePath = _fileManager.FindFile(".", "stopwords");
 	if (_stopWordsFilePath != "") {
-		std::cout << "Stop word file achado, vscode" << std::endl;
+		std::cout << "Stop word file achado" << std::endl;
 		_stopWordFile.open(_stopWordsFilePath);
 		return 1;
 	}
-	_stopWordsFilePath = _fileManager.FindFile("../../../", "stopwords");
-	if (_stopWordsFilePath != "") {
-		std::cout << "Stop word file achado, visual studio" << std::endl;
-		_stopWordFile.open(_stopWordsFilePath);
-		return 1;
-	}
+	std::cout << "Stop word file nao achado" << std::endl;
 	return 0;
 }
 
 bool FileProcessor::WordIsStopWord(std::string word)
 {
 	return _stopSet.count(word) > 0;
+}
+
+bool FileProcessor::HasSaveFile()
+{
+	fs::path saveFilePath = "";
+	saveFilePath = _fileManager.FindFileFullName(".", "index.bat");
+	std::cout << saveFilePath << std::endl;
+	if (saveFilePath != "") {
+		std::cout << "Save file file achado" << std::endl;
+		//_stopWordFile.open(saveFilePath);
+		return true;
+	}
+	std::cout << "Save file file nao achado" << std::endl;
+	return false;
 }
 
 void FileProcessor::SetWordSet()
@@ -67,9 +76,11 @@ int FileProcessor::ProcessFile(fs::path path)
 		std::cout << "Arquivo stop word nao existe/ ou nao foi encontrado" << std::endl;
 		return 0;
 	}
+	if (HasSaveFile()) {
+
+	}
 	std::string text;
 	InvertedIndex* invIndex = new InvertedIndex();
-	Serializer* serializer = new Serializer();
 	for (auto const& dir_entry : _fileManager.GetIterator(path)) {
 		if (!_fileManager.FileUseExtension(dir_entry.path(), ".txt")) continue;
 		std::cout << "Current Book: " << dir_entry.path().stem().string() << std::endl;
@@ -88,8 +99,7 @@ int FileProcessor::ProcessFile(fs::path path)
 					}
 					else {
 						newFileBuffer.append(temp);
-						invIndex->AddWord(temp, dir_entry.path().stem().string() + dir_entry.path().extension().string());
-						serializer->AddDocNames(dir_entry.path().stem().string() + dir_entry.path().extension().string());
+						invIndex->AddWord(temp, dir_entry.path().string());
 						temp.clear();
 					}
 				}
@@ -99,6 +109,7 @@ int FileProcessor::ProcessFile(fs::path path)
 				currentChar = std::tolower(static_cast<unsigned char>(currentChar));
 			}
 			if (std::ispunct(static_cast<unsigned char>(currentChar))) continue;
+			
 			temp.push_back(currentChar);
 		}
 		if (!fs::exists("bin/ProcessFiles")) {
@@ -111,7 +122,10 @@ int FileProcessor::ProcessFile(fs::path path)
 		currentFile.close();
 		//invIndex->PrintMap();
 	}
-	serializer->Serialize(invIndex->GetMap());
+	Serializer* serializer = new Serializer();
+	serializer->Serialize(invIndex->GetMap(), invIndex->GetFileNames());
+	//invIndex->PrintFileSet();
+	//invIndex->PrintMap();
 	delete invIndex;
 	delete serializer;
 	std::cout << "File processes sucessfully" << std::endl;

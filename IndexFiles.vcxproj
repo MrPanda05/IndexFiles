@@ -71,7 +71,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -106,7 +106,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\includes\FileHandlers; $(ProjectDir)\includes\InvertedIndex;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\includes\FileHandlers; $(ProjectDir)\includes\InvertedIndex; $(ProjectDir)\includes\Searchs;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -130,15 +130,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\FileHandlers\Deserializer.cpp" />
     <ClCompile Include="src\FileHandlers\FileManager.cpp" />
     <ClCompile Include="src\FileHandlers\FileProcessor.cpp" />
     <ClCompile Include="src\FileHandlers\Serializer.cpp" />
     <ClCompile Include="src\InvertedIndex\InvertedIndex.cpp" />
+    <ClCompile Include="src\InvertedIndex\SerializableInvertedIndex.cpp" />
+    <ClCompile Include="src\Searchs\WordSearcher.cpp" />
     <ClInclude Include="**\*.h" />
+    <ClInclude Include="includes\FileHandlers\Deserializer.hpp" />
     <ClInclude Include="includes\FileHandlers\FileManager.hpp" />
     <ClInclude Include="includes\FileHandlers\FileProcessor.hpp" />
     <ClInclude Include="includes\FileHandlers\Serializer.hpp" />
     <ClInclude Include="includes\InvertedIndex\InvertedIndex.hpp" />
+    <ClInclude Include="includes\InvertedIndex\SerializableInvertedIndex.hpp" />
+    <ClInclude Include="includes\Searchs\WordSearcher.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

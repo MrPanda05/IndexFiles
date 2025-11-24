@@ -17,6 +17,7 @@ class FileProcessor {
 		FileManager& _fileManager;
 		int SearchForStopWordText();
 		bool WordIsStopWord(std::string word);
+		bool HasSaveFile();
 		void SetWordSet();
 	public:
 		FileProcessor(FileManager& fileManager);

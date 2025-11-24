@@ -10,21 +10,19 @@ InvertedIndex::~InvertedIndex()
 
 void InvertedIndex::AddWord(std::string word, std::string fileName)
 {
-	/*if (_wordMap.count(word) == 1) {
-		bool foundIt = false;
-		for (int i = 0; i < _wordMap[word].size(); i++) {
-			if (_wordMap[word][i] == fileName) {
-				foundIt = true;
-			}
-		}
-		if (!foundIt) {
-			_wordMap[word].push_back(fileName);
+	_wordMap[word].insert(fileName);
+	bool alreadyInserted = false;
+	for (const auto& pair : _docNamesToInt) {
+		if (pair.second == fileName) {
+			alreadyInserted = true;
+			break;
 		}
 	}
-	else {
-		_wordMap[word].push_back(fileName);
-	}*/
-	_wordMap[word].insert(fileName);
+
+	if (!alreadyInserted) {
+		_docNamesToInt[_fileCount] = fileName;
+		_fileCount++;
+	}
 
 }
 
@@ -38,5 +36,12 @@ void InvertedIndex::PrintMap()
 			std::cout << fileName << " ";
 		}
 		std::cout << std::endl;
+	}
+}
+
+void InvertedIndex::PrintFileSet()
+{
+	for (auto itr = _docNamesToInt.begin(); itr != _docNamesToInt.end(); ++itr) {
+		std::cout << itr->first << " " << itr->second << std::endl;
 	}
 }
