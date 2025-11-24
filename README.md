@@ -2,7 +2,7 @@
 
 Feito por: Gabriel Alexsander da Costa Pereira
 
-[github]https://github.com/MrPanda05/IndexFiles
+[github](https://github.com/MrPanda05/IndexFiles)
 
 ## Como Compilar
 
