@@ -33,9 +33,6 @@
     <ClCompile Include="src\FileHandlers\Serializer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\InvertedIndex\SerializableInvertedIndex.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\FileHandlers\Deserializer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -54,9 +51,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="includes\FileHandlers\Serializer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\InvertedIndex\SerializableInvertedIndex.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="includes\FileHandlers\Deserializer.hpp">

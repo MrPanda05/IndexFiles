@@ -135,7 +135,6 @@
     <ClCompile Include="src\FileHandlers\FileProcessor.cpp" />
     <ClCompile Include="src\FileHandlers\Serializer.cpp" />
     <ClCompile Include="src\InvertedIndex\InvertedIndex.cpp" />
-    <ClCompile Include="src\InvertedIndex\SerializableInvertedIndex.cpp" />
     <ClCompile Include="src\Searchs\WordSearcher.cpp" />
     <ClInclude Include="**\*.h" />
     <ClInclude Include="includes\FileHandlers\Deserializer.hpp" />
@@ -143,7 +142,6 @@
     <ClInclude Include="includes\FileHandlers\FileProcessor.hpp" />
     <ClInclude Include="includes\FileHandlers\Serializer.hpp" />
     <ClInclude Include="includes\InvertedIndex\InvertedIndex.hpp" />
-    <ClInclude Include="includes\InvertedIndex\SerializableInvertedIndex.hpp" />
     <ClInclude Include="includes\Searchs\WordSearcher.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
